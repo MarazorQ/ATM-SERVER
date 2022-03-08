@@ -8,6 +8,7 @@ import {
   Disabitilitys,
   MaterialStatus,
   Сitizenship,
+  Clients,
 } from './clients.models';
 
 @Module({
@@ -20,6 +21,7 @@ import {
       Disabitilitys,
       MaterialStatus,
       Сitizenship,
+      Clients,
     ]),
   ],
 })

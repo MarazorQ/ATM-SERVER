@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import {
   Citys,
   Disabitilitys,
   MaterialStatus,
   Сitizenship,
+  Clients,
 } from './clients.models';
 import { CreateCityDto } from './dto/create-city.dto';
+import { CreateClientsDto } from './dto/create-clients.dto';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class ClientsService {
@@ -15,7 +18,46 @@ export class ClientsService {
     @InjectModel(Disabitilitys) private disabitilitys: typeof Disabitilitys,
     @InjectModel(MaterialStatus) private materialStatus: typeof MaterialStatus,
     @InjectModel(Сitizenship) private citizenship: typeof Сitizenship,
+    @InjectModel(Clients) private clients: typeof Clients,
   ) {}
+
+  async addClient(dto: CreateClientsDto) {
+    const check_client = await this.clients.findOne({
+      where: {
+        [Op.or]: [
+          { passport_id: dto.passport_id },
+          { inspirational_passport_number: dto.inspirational_passport_number },
+          { mobile_phone: dto.mobile_phone },
+          { email: dto.email },
+        ],
+      },
+    });
+
+    if (check_client) {
+      throw new HttpException(
+        'Клиент с такими данными уже существует!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    try {
+      const client = await this.clients.create(dto);
+      return client;
+    } catch (e) {
+      console.log('EEEE', e);
+    }
+  }
+  async getAllClient() {
+    const client = await this.clients.findAll();
+    return client;
+  }
+  async deleteClientById(dto: { id: number }) {
+    const client = await this.clients.destroy({
+      where: {
+        id: dto.id,
+      },
+    });
+    return client;
+  }
 
   async addCity(dto: CreateCityDto) {
     const city = await this.citysRepository.create(dto);

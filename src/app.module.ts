@@ -8,6 +8,7 @@ import {
   Disabitilitys,
   MaterialStatus,
   Сitizenship,
+  Clients,
 } from './clients/clients.models';
 
 @Module({
@@ -22,7 +23,14 @@ import {
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Citys, Client, Disabitilitys, MaterialStatus, Сitizenship],
+      models: [
+        Citys,
+        Client,
+        Disabitilitys,
+        MaterialStatus,
+        Сitizenship,
+        Clients,
+      ],
     }),
     ClientsModule,
   ],

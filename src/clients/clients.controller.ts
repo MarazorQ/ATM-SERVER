@@ -1,13 +1,27 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, Delete } from '@nestjs/common';
 import { CreateCityDto } from './dto/create-city.dto';
 import { CreateDisabilityDto } from './dto/create-disabitility.dto';
 import { CreateMaterialStatusDto } from './dto/create-material-status.dto';
 import { CreateCitizenshipDto } from './dto/create-citizenship.dto';
+import { CreateClientsDto } from './dto/create-clients.dto';
 import { ClientsService } from './clients.service';
 
 @Controller('clients')
 export class ClientsController {
   constructor(private clientService: ClientsService) {}
+
+  @Post('register')
+  addClient(@Body() clientDto: CreateClientsDto) {
+    return this.clientService.addClient(clientDto);
+  }
+  @Get('list')
+  getAllClients() {
+    return this.clientService.getAllClient();
+  }
+  @Delete('delete')
+  deleteClientById(@Body() clientDto: { id: number }) {
+    return this.clientService.deleteClientById(clientDto);
+  }
 
   @Post('citys')
   addCity(@Body() cityDto: CreateCityDto) {
