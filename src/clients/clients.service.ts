@@ -26,7 +26,9 @@ export class ClientsService {
       where: {
         [Op.or]: [
           { passport_id: dto.passport_id },
-          { inspirational_passport_number: dto.inspirational_passport_number },
+          {
+            inspirational_passport_number: dto.inspirational_passport_number,
+          },
           { mobile_phone: dto.mobile_phone },
           { email: dto.email },
         ],
@@ -39,15 +41,80 @@ export class ClientsService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    try {
-      const client = await this.clients.create(dto);
-      return client;
-    } catch (e) {
-      console.log('EEEE', e);
+
+    const client = await this.clients.create(dto);
+    return client;
+  }
+  async updateClientInfo(dto: CreateClientsDto) {
+    const client = await this.clients.findOne({ where: { id: dto.id } });
+
+    if (client?.passport_id !== dto.passport_id) {
+      const check_client = await this.clients.findOne({
+        where: {
+          passport_id: dto.passport_id,
+        },
+      });
+      if (check_client) {
+        throw new HttpException(
+          'Клиент с такими данными уже существует!',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     }
+    if (
+      client?.inspirational_passport_number !==
+      dto.inspirational_passport_number
+    ) {
+      const check_client = await this.clients.findOne({
+        where: {
+          inspirational_passport_number: dto.inspirational_passport_number,
+        },
+      });
+      if (check_client) {
+        throw new HttpException(
+          'Клиент с такими данными уже существует!',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    if (client?.mobile_phone !== dto.mobile_phone) {
+      const check_client = await this.clients.findOne({
+        where: {
+          mobile_phone: dto.mobile_phone,
+        },
+      });
+      if (check_client) {
+        throw new HttpException(
+          'Клиент с такими данными уже существует!',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    if (client?.email !== dto.email) {
+      const check_client = await this.clients.findOne({
+        where: {
+          email: dto.email,
+        },
+      });
+      if (check_client) {
+        throw new HttpException(
+          'Клиент с такими данными уже существует!',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    const updated_client = await this.clients.update(
+      { ...dto },
+      { where: { id: dto.id } },
+    );
+    return updated_client;
   }
   async getAllClient() {
     const client = await this.clients.findAll();
+    return client;
+  }
+  async getClientById(dto: { id: number }) {
+    const client = await this.clients.findOne({ where: { id: dto.id } });
     return client;
   }
   async deleteClientById(dto: { id: number }) {
@@ -56,7 +123,9 @@ export class ClientsService {
         id: dto.id,
       },
     });
-    return client;
+    const client_list = await this.clients.findAll();
+
+    return client_list;
   }
 
   async addCity(dto: CreateCityDto) {

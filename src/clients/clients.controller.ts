@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Delete } from '@nestjs/common';
+import { Controller, Post, Get, Body, Delete, Put } from '@nestjs/common';
 import { CreateCityDto } from './dto/create-city.dto';
 import { CreateDisabilityDto } from './dto/create-disabitility.dto';
 import { CreateMaterialStatusDto } from './dto/create-material-status.dto';
@@ -14,9 +14,17 @@ export class ClientsController {
   addClient(@Body() clientDto: CreateClientsDto) {
     return this.clientService.addClient(clientDto);
   }
+  @Put('update')
+  updateClientInfo(@Body() clientDto: CreateClientsDto) {
+    return this.clientService.updateClientInfo(clientDto);
+  }
   @Get('list')
   getAllClients() {
     return this.clientService.getAllClient();
+  }
+  @Post('byId')
+  getClientById(@Body() clientDto: { id: number }) {
+    return this.clientService.getClientById(clientDto);
   }
   @Delete('delete')
   deleteClientById(@Body() clientDto: { id: number }) {
