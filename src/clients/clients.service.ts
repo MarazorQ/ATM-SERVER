@@ -41,6 +41,7 @@ export class ClientsService {
         HttpStatus.BAD_REQUEST,
       );
     }
+    delete dto.id;
 
     const client = await this.clients.create(dto);
     return client;
@@ -103,6 +104,13 @@ export class ClientsService {
         );
       }
     }
+    if (new Date(dto.date_born) > new Date(dto.date_of_issue_of_the_passport)) {
+      throw new HttpException(
+        'Дата рождения не может быть меньше даты выдачи паспорта!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const updated_client = await this.clients.update(
       { ...dto },
       { where: { id: dto.id } },
