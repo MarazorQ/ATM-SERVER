@@ -4,12 +4,13 @@ import { ConfigModule } from '@nestjs/config';
 import { ClientsModule } from './clients/clients.module';
 import {
   Citys,
-  Client,
   Disabitilitys,
   MaterialStatus,
   Сitizenship,
   Clients,
 } from './clients/clients.models';
+import { Currency, DepositTypes } from './deposit/deposit.models';
+import { DepositModule } from './deposit/deposit.module';
 
 @Module({
   imports: [
@@ -25,14 +26,16 @@ import {
       database: process.env.POSTGRES_DB,
       models: [
         Citys,
-        Client,
         Disabitilitys,
         MaterialStatus,
         Сitizenship,
         Clients,
+        Currency,
+        DepositTypes,
       ],
     }),
     ClientsModule,
+    DepositModule,
   ],
   controllers: [],
   providers: [],

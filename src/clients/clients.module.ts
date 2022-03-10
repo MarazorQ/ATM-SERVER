@@ -3,7 +3,6 @@ import { ClientsController } from './clients.controller';
 import { ClientsService } from './clients.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import {
-  Client,
   Citys,
   Disabitilitys,
   MaterialStatus,
@@ -16,7 +15,6 @@ import {
   providers: [ClientsService],
   imports: [
     SequelizeModule.forFeature([
-      Client,
       Citys,
       Disabitilitys,
       MaterialStatus,

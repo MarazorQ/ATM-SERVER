@@ -40,25 +40,6 @@ interface ClientsCreationsAttr {
   salary: number;
   liable_for_military_service: string;
 }
-
-@Table({ tableName: 'clients' })
-export class Client extends Model<Client> {
-  @Column({
-    type: DataType.INTEGER,
-    unique: true,
-    autoIncrement: true,
-    primaryKey: true,
-  })
-  id: number;
-
-  @Column({
-    type: DataType.STRING,
-    unique: true,
-    allowNull: true,
-  })
-  first_name: string;
-}
-
 @Table({ tableName: 'citys' })
 export class Citys extends Model<Citys, CitysCreationsAttr> {
   @Column({
