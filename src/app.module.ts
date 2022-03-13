@@ -9,7 +9,12 @@ import {
   Сitizenship,
   Clients,
 } from './clients/clients.models';
-import { Currency, DepositTypes } from './deposit/deposit.models';
+import {
+  Currency,
+  DepositTypes,
+  Accounts,
+  DepositPlan,
+} from './deposit/deposit.models';
 import { DepositModule } from './deposit/deposit.module';
 
 @Module({
@@ -32,6 +37,8 @@ import { DepositModule } from './deposit/deposit.module';
         Clients,
         Currency,
         DepositTypes,
+        Accounts,
+        DepositPlan,
       ],
     }),
     ClientsModule,
