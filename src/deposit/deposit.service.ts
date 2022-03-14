@@ -78,7 +78,7 @@ export class DepositService {
   }
   async getAllClientsDepositPlan(dto: { client_id: number }) {
     const plans = await this.depositPlanRepository.findAll({
-      where: { client_id: dto.client_id },
+      where: { client_id: dto.client_id, close_depostin: false },
     });
     for (let i = 0; i < plans.length; i++) {
       let acc_percent = await this.accountsRepository.findOne({
