@@ -15,7 +15,9 @@ import {
   Accounts,
   DepositPlan,
 } from './deposit/deposit.models';
+import { CreditTypes, CreditPlan } from './credit/credit.model';
 import { DepositModule } from './deposit/deposit.module';
+import { CreditModule } from './credit/credit.module';
 
 @Module({
   imports: [
@@ -39,10 +41,13 @@ import { DepositModule } from './deposit/deposit.module';
         DepositTypes,
         Accounts,
         DepositPlan,
+        CreditTypes,
+        CreditPlan,
       ],
     }),
     ClientsModule,
     DepositModule,
+    CreditModule,
   ],
   controllers: [],
   providers: [],
